@@ -10,7 +10,7 @@ const exportBtn = document.getElementById('export-btn');
 let currentUser = null;
 let products = [];
 
-// Kayıt / Giriş
+// Kayıt / Giriş işlemi
 registerBtn.addEventListener('click', () => {
   const username = usernameInput.value.trim();
   if(!username) return alert("Lütfen kullanıcı adı girin.");
@@ -57,27 +57,12 @@ function renderProducts() {
 
   products.forEach((p, index) => {
     const expiry = new Date(p.expiry);
-    const diffDays = Math.ceil((expiry - today)/(1000*60*60*24));
+    let status = '';
+    if ((expiry - today)/(1000*60*60*24) <= 30) status = ' ⚠️ Garanti bitmek üzere!';
 
-    let statusText = '✅ Aktif';
-    let statusClass = 'active';
-    if(diffDays <= 30 && diffDays > 0) {
-      statusText = '⚠️ Bitmek üzere';
-      statusClass = 'warning';
-    } else if(diffDays <= 0) {
-      statusText = '❌ Süresi doldu';
-      statusClass = 'expired';
-    }
-
-    const li = document.createElement('li');
-    li.classList.add(statusClass);
-    li.innerHTML = `
-      <span>
-        <strong>${p.name}</strong><br>
-        Garanti Bitiş: ${expiry.toLocaleDateString()}<br>
-        <span class="status">${statusText}</span>
-      </span>
-    `;
+    const card = document.createElement('div');
+    card.className = 'product-card';
+    card.textContent = `${p.name} - Garanti Bitiş: ${expiry.toLocaleDateString()}${status}`;
 
     const delBtn = document.createElement('button');
     delBtn.textContent = 'Sil';
@@ -87,8 +72,8 @@ function renderProducts() {
       renderProducts();
     };
 
-    li.appendChild(delBtn);
-    productList.appendChild(li);
+    card.appendChild(delBtn);
+    productList.appendChild(card);
   });
 }
 
@@ -99,36 +84,4 @@ exportBtn.addEventListener('click', () => {
   dlAnchor.setAttribute("href", dataStr);
   dlAnchor.setAttribute("download", `${currentUser}_products.json`);
   dlAnchor.click();
-});
-// Sayfa yüklendiğinde otomatik garanti kontrolü
-function checkWarranty() {
-  const today = new Date();
-  let warningProducts = [];
-
-  products.forEach(p => {
-    const expiry = new Date(p.expiry);
-    const diffDays = Math.ceil((expiry - today)/(1000*60*60*24));
-    if(diffDays <= 30 && diffDays > 0){
-      warningProducts.push(`${p.name} garantisi ${diffDays} gün içinde bitiyor!`);
-    }
-  });
-
-  if(warningProducts.length > 0){
-    alert("UYARI! Aşağıdaki ürünlerin garantisi bitmek üzere:\n\n" + warningProducts.join("\n"));
-  }
-}
-
-// Sayfa yüklendiğinde ve giriş yaptıktan sonra kontrol
-registerBtn.addEventListener('click', () => {
-  const username = usernameInput.value.trim();
-  if(!username) return alert("Lütfen kullanıcı adı girin.");
-
-  currentUser = username;
-  products = JSON.parse(localStorage.getItem(`products_${currentUser}`)) || [];
-
-  registerSection.style.display = 'none';
-  productSection.style.display = 'block';
-
-  renderProducts();
-  checkWarranty(); // buraya eklendi
 });

@@ -3,13 +3,21 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Garanti Takip</title>
+  <title>Takipasyon</title>
+  
+  <!-- Google Font -->
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap" rel="stylesheet">
+  
+  <!-- CSS -->
   <link rel="stylesheet" href="style.css">
+  
+  <!-- Favicon -->
+  <link rel="icon" href="favicon.png" type="image/png">
 </head>
 <body>
   <header>
-    <h1>Garanti Takip Sistemi</h1>
-    <p>Tüm ürünlerinizin garantilerini kolayca takip edin</p>
+    <img src="logo.png" alt="Takipasyon Logo" style="height:40px; vertical-align:middle;">
+    <h1 style="display:inline-block; margin-left:10px;">Takipasyon</h1>
   </header>
 
   <main>
@@ -29,12 +37,12 @@
       </form>
 
       <h2>Ürünlerim</h2>
-      <ul id="product-list"></ul>
-
+      <div id="product-list"></div>
       <button id="export-btn">Ürünleri JSON olarak dışa aktar</button>
     </section>
   </main>
 
+  <!-- JS -->
   <script src="script.js"></script>
 </body>
 </html>
