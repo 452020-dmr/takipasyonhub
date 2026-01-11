@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Garanti Takip</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <header>
+    <h1>Garanti Takip Sistemi</h1>
+    <p>Tüm ürünlerinizin garantilerini kolayca takip edin</p>
+  </header>
+
+  <main>
+    <section id="register-section">
+      <h2>Kayıt / Giriş</h2>
+      <input type="text" id="username" placeholder="Kullanıcı Adı" required>
+      <button id="register-btn">Kaydol / Giriş Yap</button>
+    </section>
+
+    <section id="product-section" style="display:none;">
+      <h2>Ürün Ekle</h2>
+      <form id="product-form">
+        <input type="text" id="product-name" placeholder="Ürün Adı" required>
+        <input type="date" id="purchase-date" required>
+        <input type="number" id="warranty-months" placeholder="Garanti Süresi (Ay)" required>
+        <button type="submit">Ekle</button>
+      </form>
+
+      <h2>Ürünlerim</h2>
+      <ul id="product-list"></ul>
+
+      <button id="export-btn">Ürünleri JSON olarak dışa aktar</button>
+    </section>
+  </main>
+
+  <script src="script.js"></script>
+</body>
+</html>
